@@ -1,5 +1,7 @@
 # OnlyBCFans Business Central Copilot Blueprint
 
+![OnlyBCFans Business Central Copilot Blueprint banner](images/obcfBCCopilotBlueprintBanner.png)
+
 **Created by:** AJ Ansari, OnlyBCFans  
 **Last Updated:** October 10, 2026  
 **Verified against:** Business Central 27.5 (System Application 27.5.46862.46929, Base Application 27.5.46862.49619), AL runtime 15.0, AL compiler 18.0  
