@@ -7,8 +7,7 @@ description: Build a Microsoft Dynamics 365 Business Central Copilot (generative
 
 This is the agent entry point to the **OnlyBCFans Business Central Copilot Blueprint** (short: OBCF BC Copilot
 Blueprint), a verified end-to-end reference for building a Copilot feature in AL on BC 27.5, runtime 15.0. It distils a
-shipped, tested, production extension: **General Journal Copilot** by OnlyCopilotFans
-(app id d14f792f-90ff-4084-8ba7-edfe4327df4b, v1.0.0.13). Everything below compiled with 0 errors. The Microsoft-billed
+shipped, tested, production extension. Everything below compiled with 0 errors. The Microsoft-billed
 path ran end to end in a BC SaaS sandbox. The Partner-billed path is compiler- and symbol-verified; no live run against a
 customer Azure OpenAI deployment is recorded in the repo. Every API signature was verified against the BC 27.5 System
 Application symbol file, and the "compiles / does not compile" claims were re-checked with alc 18.0 against those symbols

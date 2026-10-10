@@ -5,7 +5,7 @@ Part of the OnlyBCFans Business Central Copilot Blueprint.
 ## Page skeleton that compiles and behaves on BC 27.5
 
 ```al
-page 78702 "GJCopilot Dialog"
+page 78702 "PFX Copilot Dialog"
 {
     PageType = PromptDialog;
     Caption = 'Suggest Balancing G/L Account';
@@ -124,14 +124,14 @@ page 78702 "GJCopilot Dialog"
 
 | Rule | Evidence |
 |---|---|
-| `systemaction(OK)` closes with `CloseAction = Action::OK`. Matching `Action::LookupOK` silently does nothing. | Bugfixes002 Gap 13 (CRITICAL): "Keep It" did nothing at all. |
-| Save in exactly one of the two documented places: inside `OnQueryClosePage` on `Action::OK` (Microsoft's sample), or in the caller when `RunModal()` returns `Action::OK` (this project). Learn: "You can use this trigger to write to the database" and an error there keeps the page open; the project's "errors are swallowed" note (Bugfixes002 Gap 14) was a misdiagnosis of Gap 13. | Learn OnQueryClosePage + copilot-design-content-mode (2026-10-10) |
-| `systemaction(OK)` / `systemaction(Cancel)` take no `OnAction` trigger; `Generate` (and `Regenerate`) do. | Bugfixes001 |
-| `Placeholder` is not an AL page-field property at all (AL0124 on a Card page too). Pre-fill the variable in `OnOpenPage`. | Bugfixes001; alc probe |
+| `systemaction(OK)` closes with `CloseAction = Action::OK`. Matching `Action::LookupOK` silently does nothing. | source review, gap 13 (CRITICAL): "Keep It" did nothing at all. |
+| Save in exactly one of the two documented places: inside `OnQueryClosePage` on `Action::OK` (Microsoft's sample), or in the caller when `RunModal()` returns `Action::OK` (this project). Learn: "You can use this trigger to write to the database" and an error there keeps the page open; the project's "errors are swallowed" note (source review, gap 14) was a misdiagnosis of Gap 13. | Learn OnQueryClosePage + copilot-design-content-mode (2026-10-10) |
+| `systemaction(OK)` / `systemaction(Cancel)` take no `OnAction` trigger; `Generate` (and `Regenerate`) do. | source fix round 1 |
+| `Placeholder` is not an AL page-field property at all (AL0124 on a Card page too). Pre-fill the variable in `OnOpenPage`. | source fix round 1; alc probe |
 | `PageType = PromptDialog` requires `Extensible = false`. | alc probe: AL0223 |
 | Wrap the user's free text with `AOAIChatMessages.AddXPIADetectionTags(var Text)` before adding it to the user message. | System.AI API; not done in the reference project |
-| `Image` is not accepted on actions inside `area(PromptGuide)`. | Bugfixes001 |
-| Secondary actions such as "Use a different account" belong in `area(PromptGuide)`; Processing area is not available on PromptDialog. | Bugfixes001 |
+| `Image` is not accepted on actions inside `area(PromptGuide)`. | source fix round 1 |
+| Secondary actions such as "Use a different account" belong in `area(PromptGuide)`; Processing area is not available on PromptDialog. | source fix round 1 |
 | `Regenerate` is optional. This project removed it in v1.0.0.10 because `Generate` is re-runnable; keep telemetry IDs retired, never reused. | TECHNICAL_DESIGN |
 | Reset all output variables at the start of each `Generate` (`ClearSuggestionOutput`) so a failed second run does not show stale output. | code |
 | Use `StyleExpr` with 'Favorable' / 'Attention' / 'Unfavorable' for confidence bands driven by setup thresholds. | code |
@@ -144,7 +144,7 @@ generation, and `systemaction(Attach)` for file input.
 Shipped version (processing + Promoted). See "About `area(Prompting)`" below for the preferred placement.
 
 ```al
-pageextension 78730 "GJCopilot Journal Ext" extends "General Journal"
+pageextension 78730 "PFX Copilot Journal Ext" extends "General Journal"
 {
     actions
     {
@@ -179,31 +179,31 @@ pageextension 78730 "GJCopilot Journal Ext" extends "General Journal"
 
     local procedure RunSuggestBalancingAccount()
     var
-        GJCopilotDialog: Page "GJCopilot Dialog";
+        PFXCopilotDialog: Page "PFX Copilot Dialog";
         ...
     begin
         // Recommended addition (not in the shipped code): platform consent/notification pre-check
         // if not AzureOpenAI.IsEnabled(Enum::"Copilot Capability"::SuggestGLBalancingAccount) then exit;
-        if not GJCopilotValidator.ValidatePreConditions(Rec."Journal Template Name", Rec."Journal Batch Name", Rec."Document No.", ErrMsg) then begin
+        if not PFXCopilotValidator.ValidatePreConditions(Rec."Journal Template Name", Rec."Journal Batch Name", Rec."Document No.", ErrMsg) then begin
             Message(ErrMsg);
             exit;
         end;
-        GJCopilotDialog.SetContext(Rec."Journal Template Name", Rec."Journal Batch Name", Rec."Document No.");
-        GJCopilotDialog.RunModal();
-        if GJCopilotDialog.WasAccepted() then
-            if not GJCopilotLineInserter.InsertBalancingLine(..., GJCopilotDialog.GetAcceptedAccountNo()) then
+        PFXCopilotDialog.SetContext(Rec."Journal Template Name", Rec."Journal Batch Name", Rec."Document No.");
+        PFXCopilotDialog.RunModal();
+        if PFXCopilotDialog.WasAccepted() then
+            if not PFXCopilotLineInserter.InsertBalancingLine(..., PFXCopilotDialog.GetAcceptedAccountNo()) then
                 Message(LineInsertFailureMsg)
             else
-                if not GJCopilotLineInserter.VerifyBalanceAfterInsertion(...) then
+                if not PFXCopilotLineInserter.VerifyBalanceAfterInsertion(...) then
                     Message(StillUnbalancedWarningMsg);
-        if GJCopilotDialog.WasManualOverride() then
+        if PFXCopilotDialog.WasManualOverride() then
             Message(ManualOverrideSelectedMsg);
         CurrPage.Update(false);
     end;
 
     local procedure UpdateActionState()
     begin
-        IsActionEnabled := GJCopilotMgmt.IsConfigured() and GJCopilotMgmt.IsCapabilityActive();
+        IsActionEnabled := PFXCopilotMgmt.IsConfigured() and PFXCopilotMgmt.IsCapabilityActive();
     end;
 }
 ```

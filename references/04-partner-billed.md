@@ -15,11 +15,11 @@ passing live Test Connection or a Partner-billed suggestion. Run it against a re
 AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::SuggestGLBalancingAccount);
 AzureOpenAI.SetAuthorization(
     Enum::"AOAI Model Type"::"Chat Completions",
-    GJCopilotMgmt.GetPartnerEndpointURL(),        // Text, from IsolatedStorage
-    GJCopilotSetup."Partner Deployment Name",     // Text[100], from setup table
-    GJCopilotMgmt.GetPartnerAPIKey());            // SecretText, from IsolatedStorage
-AOAIChatCompletionParams.SetMaxTokens(GJCopilotSetup."Max Output Tokens");
-AOAIChatCompletionParams.SetTemperature(GJCopilotSetup.Temperature);
+    PFXCopilotMgmt.GetPartnerEndpointURL(),        // Text, from IsolatedStorage
+    PFXCopilotSetup."Partner Deployment Name",     // Text[100], from setup table
+    PFXCopilotMgmt.GetPartnerAPIKey());            // SecretText, from IsolatedStorage
+AOAIChatCompletionParams.SetMaxTokens(PFXCopilotSetup."Max Output Tokens");
+AOAIChatCompletionParams.SetTemperature(PFXCopilotSetup.Temperature);
 ```
 
 Verified signature: `SetAuthorization(ModelType: Enum "AOAI Model Type", Endpoint: Text, Deployment: Text, ApiKey: SecretText)`.
@@ -44,7 +44,7 @@ if IsolatedStorage.Get(PartnerEndpointURLKeyTok, DataScope::Company, EndpointURL
 if IsolatedStorage.Contains(Key, DataScope::Company) then IsolatedStorage.Delete(Key, DataScope::Company);
 ```
 
-`IsolatedStorage.SetSecret(...)` **does not exist**; the first build used it and failed to compile (Bugfixes001).
+`IsolatedStorage.SetSecret(...)` **does not exist**; the first build used it and failed to compile (source fix round 1).
 Keep a Boolean `"Partner Endpoint Configured"` in the setup table so `IsConfigured()` can answer without touching
 IsolatedStorage, and set it in the same procedure that saves the credentials.
 

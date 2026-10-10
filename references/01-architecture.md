@@ -2,7 +2,7 @@
 
 Part of the OnlyBCFans Business Central Copilot Blueprint.
 
-Source of truth: General Journal Copilot v1.0.0.13 (BC 27.5, runtime 15.0, target Cloud).
+Source of truth: the shipped source extension (BC 27.5, runtime 15.0, target Cloud).
 
 ## app.json that worked
 
@@ -38,26 +38,26 @@ src/
 
 | ID | Object | Type | Role |
 |---|---|---|---|
-| 78700 | GJCopilot Setup | Table | single-row config per company |
-| 78701 | GJCopilot Log | Table | audit, AutoIncrement PK |
-| 78700 | GJCopilot Billing Mode | Enum | " " / MicrosoftBilled / PartnerBilled |
-| 78701 | GJCopilot MS Model | Enum | GPT41 / GPT41Mini |
-| 78702 | GJCopilot Log Outcome | Enum | Accepted / Discarded / ManualOverride / Error / Generated |
-| 78700 | GJCopilot Capability | EnumExt of "Copilot Capability" | SuggestGLBalancingAccount |
-| 78700 | GJCopilot Setup Card | Page Card | UsageCategory = Administration |
-| 78701 | GJCopilot Log List | Page List | admin housekeeping |
-| 78702 | GJCopilot Dialog | Page PromptDialog | the Copilot UI |
-| 78703 | GJCopilot Setup Wizard | Page NavigatePage | assisted setup |
-| 78730 | GJCopilot Journal Ext | PageExt of page 39 | entry point action |
-| 78700 | GJCopilot Install | Codeunit Install | capability + assisted setup registration |
-| 78701 | GJCopilot Upgrade | Codeunit Upgrade | upserts, backfills |
-| 78702 | GJCopilot Mgmt | Codeunit | IsConfigured, IsCapabilityActive, secrets |
-| 78703 | GJCopilot AI Engine | Codeunit | Azure OpenAI |
-| 78704 | GJCopilot Context Builder | Codeunit | JSON context, token budget |
-| 78705 | GJCopilot Line Inserter | Codeunit | writes the journal line |
-| 78706 | GJCopilot Validator | Codeunit | pre-conditions and output validation |
-| 78707 | GJCopilot Logger | Codeunit | audit rows |
-| 78708 | GJCopilot Telemetry | Codeunit SingleInstance | Feature Telemetry events |
+| 78700 | PFX Copilot Setup | Table | single-row config per company |
+| 78701 | PFX Copilot Log | Table | audit, AutoIncrement PK |
+| 78700 | PFX Copilot Billing Mode | Enum | " " / MicrosoftBilled / PartnerBilled |
+| 78701 | PFX Copilot MS Model | Enum | GPT41 / GPT41Mini |
+| 78702 | PFX Copilot Log Outcome | Enum | Accepted / Discarded / ManualOverride / Error / Generated |
+| 78700 | PFX Copilot Capability | EnumExt of "Copilot Capability" | SuggestGLBalancingAccount |
+| 78700 | PFX Copilot Setup Card | Page Card | UsageCategory = Administration |
+| 78701 | PFX Copilot Log List | Page List | admin housekeeping |
+| 78702 | PFX Copilot Dialog | Page PromptDialog | the Copilot UI |
+| 78703 | PFX Copilot Setup Wizard | Page NavigatePage | assisted setup |
+| 78730 | PFX Copilot Journal Ext | PageExt of page 39 | entry point action |
+| 78700 | PFX Copilot Install | Codeunit Install | capability + assisted setup registration |
+| 78701 | PFX Copilot Upgrade | Codeunit Upgrade | upserts, backfills |
+| 78702 | PFX Copilot Mgmt | Codeunit | IsConfigured, IsCapabilityActive, secrets |
+| 78703 | PFX Copilot AI Engine | Codeunit | Azure OpenAI |
+| 78704 | PFX Copilot Context Builder | Codeunit | JSON context, token budget |
+| 78705 | PFX Copilot Line Inserter | Codeunit | writes the journal line |
+| 78706 | PFX Copilot Validator | Codeunit | pre-conditions and output validation |
+| 78707 | PFX Copilot Logger | Codeunit | audit rows |
+| 78708 | PFX Copilot Telemetry | Codeunit SingleInstance | Feature Telemetry events |
 
 All codeunits are `Access = Internal`. The dialog is `Extensible = false`, which the compiler requires for `PageType = PromptDialog` (AL0223).
 

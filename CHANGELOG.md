@@ -36,5 +36,5 @@ AL runtime 15.0, AL compiler 18.0.2819426.
   matrix, the `RunObject` rendering note, `Visible = IsCapabilityRegistered` guidance, and Sparkle/caption guidance.
 
 ### Provenance
-- Distilled from General Journal Copilot v1.0.0.13 (OnlyCopilotFans), including its Bugfixes001/002 and code-review
+- Distilled from a shipped production extension, including its bug-fix and code-review
   records, on 2026-10-09.

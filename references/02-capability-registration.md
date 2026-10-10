@@ -5,10 +5,10 @@ Part of the OnlyBCFans Business Central Copilot Blueprint.
 ## Declare (enum extension)
 
 ```al
-namespace GeneralJournalCopilot.Common;
+namespace PFX.Copilot.Common;
 using System.AI;
 
-enumextension 78700 "GJCopilot Capability" extends "Copilot Capability"
+enumextension 78700 "PFX Copilot Capability" extends "Copilot Capability"
 {
     value(78700; SuggestGLBalancingAccount)
     {
@@ -55,7 +55,7 @@ Enum values available:
   dialog shows a preview badge when `IsPreview = true`.
 - `Copilot Billing Type`: "Not Billed", "Microsoft Billed", "Custom Billed", Undefined. Use "Microsoft Billed"
   when the feature can run on Microsoft-managed resources. The first build of this project registered "Not Billed"
-  by mistake and it was flagged in review (Bugfixes002 Gap 1).
+  by mistake and it was flagged in review (source review, gap 1).
 
 Also available: `ModifyCapability(cap, availability, billingType, url)`, `UnregisterCapability(cap)`,
 `IsCapabilityRegistered(cap[, AppId])`, `IsCapabilityActive(cap[, AppId])`.
@@ -85,7 +85,7 @@ CopilotCapability.IsCapabilityActive(Enum::"Copilot Capability"::SuggestGLBalanc
 AzureOpenAI.IsEnabled(Enum::"Copilot Capability"::SuggestGLBalancingAccount)          // or IsEnabled(cap, Silent)
 
 // Has our app configured a billing mode (and, for Partner, stored credentials)?
-GJCopilotMgmt.IsConfigured()
+PFXCopilotMgmt.IsConfigured()
 ```
 
 The reference project only used `IsCapabilityActive`; adding `IsEnabled` is the stronger pattern (consent behaviour not
@@ -104,4 +104,4 @@ AzureOpenAI.SetCopilotCapability(Enum::"Copilot Capability"::SuggestGLBalancingA
 ```
 
 Forgetting this is the most common runtime failure. Symptom text: `Copilot capability has not been set.`
-It applies to the Partner-billed path and to connection tests too (Bugfixes002 Gaps 10 and 11).
+It applies to the Partner-billed path and to connection tests too (source review, gaps 10 and 11).

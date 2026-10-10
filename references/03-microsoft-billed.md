@@ -10,7 +10,7 @@ Business Central (Copilot credits / the tenant's AI allocation). This path is Sa
 ```al
 local procedure SetupAuthorization(var AzureOpenAI: Codeunit "Azure OpenAI";
                                    var AOAIChatCompletionParams: Codeunit "AOAI Chat Completion Params";
-                                   GJCopilotSetup: Record "GJCopilot Setup";
+                                   PFXCopilotSetup: Record "PFX Copilot Setup";
                                    var OutModelUsed: Text[100]; var OutErrorMsg: Text[250]): Boolean
 var
     AOAIDeployments: Codeunit "AOAI Deployments";
@@ -25,10 +25,10 @@ begin
         exit(false);
     end;
 
-    case GJCopilotSetup."MS Model" of
-        Enum::"GJCopilot MS Model"::GPT41:
+    case PFXCopilotSetup."MS Model" of
+        Enum::"PFX Copilot MS Model"::GPT41:
             DeploymentMethod := AOAIDeployments.GetGPT41Latest();
-        Enum::"GJCopilot MS Model"::GPT41Mini:
+        Enum::"PFX Copilot MS Model"::GPT41Mini:
             DeploymentMethod := AOAIDeployments.GetGPT41MiniLatest();
     end;
 
@@ -48,7 +48,7 @@ Verified signature (non-obsolete):
 `SetManagedResourceAuthorization(ModelType: Enum "AOAI Model Type", AOAIAccountName: Text, ApiKey: SecretText, ManagedResourceDeployment: Text)`
 
 The older 5-parameter overload `(ModelType, Endpoint, Deployment, ApiKey, ManagedResourceDeployment)` is
-**obsolete since 26.0**. Bugfixes001 records the migration from 2 params the agent guessed to the real 4.
+**obsolete since 26.0**. source fix round 1 records the migration from 2 params the agent guessed to the real 4.
 
 ## Deployment getters in BC 27.5 (`AOAI Deployments`, codeunit 7768)
 

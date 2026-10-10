@@ -70,7 +70,7 @@ One reference design, documented thoroughly:
 
 ## Where it comes from
 
-The Blueprint is distilled from **General Journal Copilot** (publisher OnlyCopilotFans, v1.0.0.13), a per-tenant
+The Blueprint is distilled from a shipped, per-tenant
 extension that suggests the balancing G/L account for a General Journal document from a PromptDialog, with confidence
 score, rationale, audit log and telemetry. The extension was built, reviewed, fixed and tested on a BC 27.5 SaaS
 sandbox. Its bug-fix and review records are the evidence behind most entries in the false-assumptions table.
@@ -151,7 +151,6 @@ not at the JSON root. The procedure is written out at the end of
   the `Prompting` area typo) are candidates for that library.
 - **OnlyCopilotFans BC Agentic Dev Framework** - the end-to-end agentic build process. It can consume the Blueprint as a
   fetched input; the Blueprint does not depend on it.
-- **General Journal Copilot** (OnlyCopilotFans) - the extension this Blueprint was distilled from.
 
 ## Versioning
 

@@ -14,8 +14,8 @@ var
     AOAIOperationResponse: Codeunit "AOAI Operation Response";
     ChatMessages: Codeunit "AOAI Chat Messages";
 begin
-    GJCopilotMgmt.GetOrCreateSetup(GJCopilotSetup);
-    if not SetupAuthorization(AzureOpenAI, AOAIChatCompletionParams, GJCopilotSetup, OutModelUsed, OutErrorMsg) then
+    PFXCopilotMgmt.GetOrCreateSetup(PFXCopilotSetup);
+    if not SetupAuthorization(AzureOpenAI, AOAIChatCompletionParams, PFXCopilotSetup, OutModelUsed, OutErrorMsg) then
         exit(false);                                            // sets capability + billing-mode auth (03/04)
 
     ChatMessages.SetPrimarySystemMessage(BuildSystemPrompt(COAContextJson));   // on ChatMessages, NOT on AzureOpenAI
@@ -57,7 +57,7 @@ this project relied on prompt instructions plus a tolerant parser and did not ne
 | other | "Copilot could not reach the AI service. Try again." | Unknown-<code> |
 
 Never surface raw diagnostics (`GetLastErrorText`, raw response) to end users in production. The project shipped
-DIAG-* strings once by accident; review caught it (Bugfixes002 Gap 15).
+DIAG-* strings once by accident; review caught it (source review, gap 15).
 
 ## System prompt pattern that produced parseable output
 
@@ -108,7 +108,7 @@ Build the system prompt fresh on every call (idempotent guard rails). Newlines: 
 
 `GetResult()` returned, in practice, either the bare assistant content or a `{"role":"assistant","content":"..."}`
 envelope, sometimes wrapped in ``` fences or surrounded by prose, and the model occasionally renamed keys. The
-parser that stopped the "unexpected response" failures (Bugfixes002 Gap 12):
+parser that stopped the "unexpected response" failures (source review, gap 12):
 
 1. `Trim()`; if it parses as JSON and has `content`, take `content` and trim again.
 2. If it starts with ```, cut from first `{` to last `}`.

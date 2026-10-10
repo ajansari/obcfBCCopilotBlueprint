@@ -5,7 +5,7 @@ Part of the OnlyBCFans Business Central Copilot Blueprint.
 ## Setup card
 
 - `PageType = Card; SourceTable = <Setup>; InsertAllowed = false; DeleteAllowed = false; UsageCategory = Administration; ApplicationArea = All;`
-- **A `UsageCategory` is required** or the page is invisible to Tell Me search (Bugfixes002 Gap 9); `Administration` is the right value for a setup card.
+- **A `UsageCategory` is required** or the page is invisible to Tell Me search (source review, gap 9); `Administration` is the right value for a setup card.
 - `OnOpenPage` calls `GetOrCreateSetup(Rec)` so the single row always exists.
 - Groups toggled by billing mode: `Visible = IsMSBilled` / `Visible = IsPartnerBilled`, recomputed in
   `OnAfterGetRecord` and in the Billing Mode field's `OnValidate`.
@@ -19,7 +19,7 @@ local procedure RegisterAssistedSetup()
 var
     GuidedExperience: Codeunit "Guided Experience";
 begin
-    if GuidedExperience.Exists(Enum::"Guided Experience Type"::"Assisted Setup", ObjectType::Page, Page::"GJCopilot Setup Wizard") then
+    if GuidedExperience.Exists(Enum::"Guided Experience Type"::"Assisted Setup", ObjectType::Page, Page::"PFX Copilot Setup Wizard") then
         exit;
     GuidedExperience.InsertAssistedSetup(
         AssistedSetupTitleTok,          // Text[2048]
@@ -27,7 +27,7 @@ begin
         AssistedSetupDescriptionTok,    // Text[1024]
         5,                              // expected minutes
         ObjectType::Page,
-        Page::"GJCopilot Setup Wizard",
+        Page::"PFX Copilot Setup Wizard",
         Enum::"Assisted Setup Group"::Extensions,
         '',                             // VideoUrl Text[250]
         Enum::"Video Category"::Uncategorized,
@@ -59,7 +59,7 @@ the `Exists` guard) to refresh title/description on existing tenants (OPEN-09).
 - Branch after Billing Mode: MS → Model step; Partner → Endpoint step → API Key step (Next gated on a passing test).
 - `FinishSetup()`: copy values from `Rec` to the real record, save/clear partner credentials, set
   `"Assisted Setup Completed" := true`, `Modify()`, `GuidedExperience.CompleteAssistedSetup(ObjectType::Page, Page::"<Wizard>")`, Message, Close.
-- Page object names max 30 characters ("GJCopilot Assisted Setup Wizard" was too long and had to be renamed).
+- Page object names max 30 characters ("PFX Copilot Assisted Setup Wizard" was too long and had to be renamed).
 - A privacy notice on the Welcome step: what data goes to the model, and that Microsoft-billed is covered by the
   BC SaaS Data Protection Addendum.
 
